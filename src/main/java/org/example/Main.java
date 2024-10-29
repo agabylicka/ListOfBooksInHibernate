@@ -20,6 +20,10 @@ public class Main {
         LibraryDAO libraryDAO = new LibraryDAO();
         List<Book> result1 = libraryDAO.getBooksOfAuthor(author.getName());
         System.out.println(result1);
+
+        LibraryDAO dao = new LibraryDAO();
+        Book book = new Book();
+
     }
 
 }

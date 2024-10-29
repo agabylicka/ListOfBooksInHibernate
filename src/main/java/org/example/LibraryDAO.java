@@ -15,6 +15,7 @@ public class LibraryDAO {
     private final SessionFactory sessionFactory = AuthorSessionFactory.getAuthorSessionFactory();
 
     public List<Book> getBooksOfAuthor(String authorName) {
+        // check that author is in base --> read
         SessionFactory sessionFactory = AuthorSessionFactory.getAuthorSessionFactory();
         Session session = sessionFactory.openSession();
 
@@ -33,12 +34,16 @@ public class LibraryDAO {
         return results;
     }
 
-    // sprawdza czy autor jest w bazie --> read
-    public void addBookToAuthor(String authorName, Book book) {
 
+    public void addBookToAuthor(String authorName, Book book) {
+        //add book to author
+            Session session = sessionFactory.openSession();
+            Transaction transaction = session.beginTransaction();
+            session.merge(book);
+            transaction.commit();
+            session.close();
     }
 
-    // dodaje książkę do autora --> create
     public void getAllAuthors() {
     }
 
@@ -57,17 +62,14 @@ public class LibraryDAO {
 
     }
 
-    Session session = sessionFactory.openSession();
-    Transaction transaction = session.beginTransaction();
 
-
-    private void saveBooks(List<Book> books) {
+   /* private void saveBooks(List<Book> books) {
         SessionFactory sessionFactory = AuthorSessionFactory.getAuthorSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         books.forEach(session::merge);
         transaction.commit();
-        session.close();
+        session.close(); */
     }
 
     public Author findBookByAuthorName(String book) {
@@ -107,8 +109,8 @@ public class LibraryDAO {
         SessionFactory sessionFactory = AuthorSessionFactory.getAuthorSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        //Book b = findBookByTitle(title);
-        //session.remove(b);
+        Book b = findBookByTitle(title);
+        session.remove(title);
         transaction.commit();
         session.close();
     }
